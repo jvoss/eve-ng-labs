@@ -1,0 +1,11 @@
+set interfaces ethernet eth0 address '172.16.45.5/24'
+set interfaces ethernet eth0 address 'fd01:101:2d::5/64'
+set interfaces ethernet eth0 description 'PE5'
+set interfaces loopback lo
+set protocols bgp address-family ipv4-unicast
+set protocols bgp address-family ipv6-unicast
+set protocols bgp neighbor fd01:101:2d::4 address-family ipv4-unicast
+set protocols bgp neighbor fd01:101:2d::4 address-family ipv6-unicast
+set protocols bgp neighbor fd01:101:2d::4 remote-as 'external'
+set protocols bgp system-as '65005'
+set system host-name 'CE5'

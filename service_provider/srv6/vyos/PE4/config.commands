@@ -1,0 +1,47 @@
+set interfaces ethernet eth0 description 'P3'
+set interfaces ethernet eth1 address '172.16.45.4/24'
+set interfaces ethernet eth1 address 'fd01:101:2d::4/64'
+set interfaces ethernet eth1 description 'CE2'
+set interfaces ethernet eth1 vrf 'VRF1'
+set interfaces loopback lo address '2001:db8:4:ffff::4/128'
+set protocols bgp neighbor 2001:db8:2:ffff::2 description 'PE2'
+set protocols bgp neighbor 2001:db8:2:ffff::2 peer-group 'PE'
+set protocols bgp parameters router-id '10.0.0.4'
+set protocols bgp peer-group PE address-family ipv4-vpn nexthop-self
+set protocols bgp peer-group PE address-family ipv6-vpn nexthop-self
+set protocols bgp peer-group PE capability extended-nexthop
+set protocols bgp peer-group PE remote-as 'internal'
+set protocols bgp peer-group PE update-source 'lo'
+set protocols bgp srv6 locator 'L3VPN'
+set protocols bgp system-as '65000'
+set protocols isis interface eth0
+set protocols isis interface lo
+set protocols isis level 'level-2'
+set protocols isis net '49.0000.4444.4444.4444.00'
+set protocols isis redistribute ipv6 static level-2
+set protocols segment-routing interface eth0 srv6
+set protocols segment-routing srv6 locator L3VPN behavior-usid
+set protocols segment-routing srv6 locator L3VPN prefix '2001:db8:4:aaa::/64'
+set protocols static route6 2001:db8:4::/48 blackhole
+set system host-name 'PE4'
+set system sysctl parameter net.vrf.strict_mode value '1'
+set vrf name VRF1 protocols bgp address-family ipv4-unicast export vpn
+set vrf name VRF1 protocols bgp address-family ipv4-unicast import vpn
+set vrf name VRF1 protocols bgp address-family ipv4-unicast rd vpn export '10.0.0.4:101'
+set vrf name VRF1 protocols bgp address-family ipv4-unicast redistribute connected
+set vrf name VRF1 protocols bgp address-family ipv4-unicast route-target vpn export '65000:101'
+set vrf name VRF1 protocols bgp address-family ipv4-unicast route-target vpn import '65000:101'
+set vrf name VRF1 protocols bgp address-family ipv6-unicast export vpn
+set vrf name VRF1 protocols bgp address-family ipv6-unicast import vpn
+set vrf name VRF1 protocols bgp address-family ipv6-unicast rd vpn export '10.0.0.4:101'
+set vrf name VRF1 protocols bgp address-family ipv6-unicast redistribute connected
+set vrf name VRF1 protocols bgp address-family ipv6-unicast route-target vpn export '65000:101'
+set vrf name VRF1 protocols bgp address-family ipv6-unicast route-target vpn import '65000:101'
+set vrf name VRF1 protocols bgp neighbor fd01:101:2d::5 peer-group 'CE'
+set vrf name VRF1 protocols bgp parameters router-id '10.0.0.4'
+set vrf name VRF1 protocols bgp peer-group CE address-family ipv4-unicast
+set vrf name VRF1 protocols bgp peer-group CE address-family ipv6-unicast
+set vrf name VRF1 protocols bgp peer-group CE remote-as 'external'
+set vrf name VRF1 protocols bgp sid vpn per-vrf export '101'
+set vrf name VRF1 protocols bgp system-as '65000'
+set vrf name VRF1 table '101'
