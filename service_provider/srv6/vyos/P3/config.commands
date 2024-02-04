@@ -1,5 +1,5 @@
 set interfaces ethernet eth0 description 'PE2'
-set interfaces ethernet eth1 description 'PE3'
+set interfaces ethernet eth1 description 'PE4'
 set interfaces loopback lo
 set protocols isis interface eth0
 set protocols isis interface eth1
