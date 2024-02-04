@@ -3,7 +3,7 @@ interfaces {
         description "PE2"
     }
     ethernet eth1 {
-        description "PE3"
+        description "PE4"
     }
     ethernet eth2 {
     }
